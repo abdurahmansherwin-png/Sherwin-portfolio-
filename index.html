@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Responsive SPA portfolio built with Tailwind CSS" />
+  <title>Portfolio SPA — Tailwind</title>
+  <!-- Tailwind CDN (for quick prototype). For production, compile Tailwind locally. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Optional Tailwind config override for palette
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Section transitions */
+    .section {
+      transition: opacity 400ms ease, transform 400ms ease, visibility 400ms ease;
+      opacity: 0;
+      transform: translateY(12px) scale(0.995);
+      visibility: hidden;
+      position: absolute; /* stack sections so only the active one occupies visible space */
+      inset: 72px 0 0 0; /* leave space for nav (desktop height) */
+      padding: 2rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .section.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      visibility: visible;
+      position: static; /* active becomes part of flow */
+    }
+
+    /* Ensure mobile & small screens have nav height accounted for */
+    @media (max-width: 640px) {
+      .section { inset: 64px 0 0 0; }
+    }
+
+    /* Simple focus outline override for nicer visuals */
+    .focus-outline:focus { outline: 2px solid rgba(99,102,241,0.35); outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 leading-relaxed">
+  <!-- NAVBAR -->
+  <header class="fixed w-full top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-indigo-400 flex items-center justify-center text-white font-bold">M</div>
+        <a href="#home" data-nav="home" class="text-lg font-semibold">Sherwin Portfolio</a>
+      </div>
+
+      <!-- desktop links -->
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#home" data-nav="home" class="nav-link hover:text-primary-500">Home</a>
+        <a href="#about" data-nav="about" class="nav-link hover:text-primary-500">About</a>
+        <a href="#projects" data-nav="projects" class="nav-link hover:text-primary-500">Projects</a>
+        <a href="#contact" data-nav="contact" class="nav-link hover:text-primary-500">Contact</a>
+      </nav>
+
+      <!-- mobile hamburger -->
+      <div class="md:hidden">
+        <button id="mobile-toggle" aria-expanded="false" aria-controls="mobile-menu" class="focus-outline p-2 rounded-md">
+          <svg id="hamburger" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="closeicon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile menu (collapsible) -->
+    <div id="mobile-menu" class="md:hidden border-t border-gray-100 hidden">
+      <div class="flex flex-col px-4 py-3 gap-2">
+        <a href="#home" data-nav="home" class="mobile-link py-2">Home</a>
+        <a href="#about" data-nav="about" class="mobile-link py-2">About</a>
+        <a href="#projects" data-nav="projects" class="mobile-link py-2">Projects</a>
+        <a href="#contact" data-nav="contact" class="mobile-link py-2">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT: sections stacked but only one active -->
+  <main class="max-w-6xl mx-auto mt-20 md:mt-24 px-4 pb-20 relative min-h-[60vh]">
+
+    <!-- HOME -->
+    <section id="home" class="section active bg-white rounded-2xl shadow-sm p-8 md:p-12">
+      <div class="md:flex md:items-center md:gap-8">
+        <div class="flex-1">
+          <h1 class="text-3xl md:text-4xl font-bold">Hello — I'm Sherwin</h1>
+          <p class="mt-4 text-gray-600 max-w-xl">I'm a Gsat and Cignal installer and maxim food delivery and also cellphone technician.</p>
+
+          <div class="mt-6 flex items-center gap-4">
+            <a href="#projects" data-nav="projects" class="btn-primary inline-block px-5 py-3 rounded-lg bg-primary-500 text-white font-medium shadow hover:shadow-lg transition">View Projects</a>
+            <a href="#contact" data-nav="contact" class="inline-block px-4 py-3 rounded-lg border border-gray-200">Get in touch</a>
+          </div>
+        </div>
+
+        <div class="mt-8 md:mt-0 md:w-56 md:h-56 w-full flex-shrink-0">
+          
+    <div class="w-full h-56 md:h-56 rounded-xl overflow-hidden border border-gray-100">
+        <img src="profile.jpg"
+             alt="Profile Photo"
+             class="w-full h-full object-cover" />
+    </div>
+
+</div>
+</div>
+          </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section bg-white rounded-2xl shadow-sm p-8 md:p-12">
+      <h2 class="text-2xl font-bold">About Me</h2>
+      <p class="mt-3 text-gray-600">I installer of gsat satellite tv cable and cp LCD installer and i enjoy turning complex problem into simple.</p>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold">Skills</h3>
+          <ul class="mt-3 list-disc list-inside text-gray-700">
+            <li>Running with out shoe</li>
+            <li>Eating while standing</li>
+            <li>Technician of cellphone</li>
+            <li>Driving all vehicle</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-semibold">Work Experience</h3>
+          <ol class="mt-3">
+            <li class="mb-4">
+              <div class="font-medium">Maxim and food delivery all around in Zamboanga City</div>
+              <div class="text-sm text-gray-600">2021 — Present note this is part time and prelancel</div>
+              <p class="mt-1 text-gray-700">To helping the community and others people.</p>
+            </li>
+
+            <li>
+              <div class="font-medium">Gsat\Cignal installer and technician</div>
+              <div class="text-sm text-gray-600">2022 — Present note this is part time</div>
+              <p class="mt-1 text-gray-700">Install the cable satellite tv and to make happy everyone.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="font-semibold">Education</h3>
+        <div class="mt-2 text-gray-700">Diploma in information and information technology — Zamboanga Peninsula Polytechnic State University (2023 — 2026)</div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section bg-white rounded-2xl shadow-sm p-8 md:p-12">
+      <h2 class="text-2xl font-bold">Projects</h2>
+      <p class="mt-2 text-gray-600">Gsat and Cignal marketing at the around of Zamboanga City.</p>
+
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Project Card -->
+        <article class="group bg-gray-50 rounded-lg border border-gray-100 p-4 hover:shadow-lg transition">
+          <div class="h-36 rounded-md bg-gray-200 flex items-center justify-center"></div>
+          <h3 class="mt-3 font-semibold">Project One</h3>
+          <p class="mt-2 text-sm text-gray-600">First week of next month I will marketing at the district 1.</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="text-xs px-2 py-1 rounded bg-white border text-gray-600"></span>
+            <span class="text-xs px-2 py-1 rounded bg-white border text-gray-600"></span>
+          </div>
+        </article>
+
+        <article class="group bg-gray-50 rounded-lg border border-gray-100 p-4 hover:shadow-lg transition">
+          <div class="h-36 rounded-md bg-gray-200 flex items-center justify-center"></div>
+          <h3 class="mt-3 font-semibold">Project Two</h3>
+          <p class="mt-2 text-sm text-gray-600">Second week of next month I will marketing at the district 2.</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="text-xs px-2 py-1 rounded bg-white border text-gray-600"></span>
+            <span class="text-xs px-2 py-1 rounded bg-white border text-gray-600"></span>
+          </div>
+        </article>
+
+        <article class="group bg-gray-50 rounded-lg border border-gray-100 p-4 hover:shadow-lg transition">
+          <div class="h-36 rounded-md bg-gray-200 flex items-center justify-center"></div>
+          <h3 class="mt-3 font-semibold">Project Three</h3>
+          <p class="mt-2 text-sm text-gray-600">The third week of the following month I will marketing at the Cities of Zamboanga.</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="text-xs px-2 py-1 rounded bg-white border text-gray-600"></span>
+            <span class="text-xs px-2 py-1 rounded bg-white border text-gray-600"></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section bg-white rounded-2xl shadow-sm p-8 md:p-12">
+      <h2 class="text-2xl font-bold">Contact</h2>
+      <p class="mt-2 text-gray-600">I'd love to hear about your project or opportunity — reach out!</p>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold">Contact Info</h3>
+          <ul class="mt-3 text-gray-700 space-y-2">
+            <li class="flex items-center gap-3"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 01-8 0M12 12V8m0 4v4m0-8a4 4 0 100-8 4 4 0 000 8z" /></svg><span>sherwin@gmail.com</span></li>
+            <li class="flex items-center gap-3"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m3 16l3-3m0 0l3-3m-3 3v6" /></svg><span>+63 9101590751</span></li>
+            <li class="flex items-center gap-3"><span>Zamboanga, Philippines</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <form id="contact-form" class="space-y-4" onsubmit="return false;">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Name</label>
+              <input type="text" id="name" class="mt-1 block w-full rounded-md border-gray-200 shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-2" placeholder="Your full name" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Email</label>
+              <input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-200 shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-2" placeholder=>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Message</label>
+              <textarea id="message" rows="4" class="mt-1 block w-full rounded-md border-gray-200 shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-2" placeholder="Tell me about your concern" required></textarea>
+            </div>
+            <div class="text-right">
+              <button id="submit-btn" class="inline-block px-4 py-2 rounded-lg bg-primary-500 text-white font-medium">Send Message</button>
+            </div>
+            <div id="form-toast" class="hidden text-sm mt-2 text-green-600">I will response later please check your gmail.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="max-w-6xl mx-auto px-4 pb-8 text-center text-sm text-gray-500">
+    © <span id="year"></span> SHERWIN — Built with Tailwind CSS
+  </footer>
+
+  <script>
+    // SPA logic
+    const sections = Array.from(document.querySelectorAll('.section'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+    const mobileLinks = Array.from(document.querySelectorAll('.mobile-link'));
+    const brandLinks = Array.from(document.querySelectorAll('[data-nav]'));
+
+    function showSection(id) {
+      // hide all
+      sections.forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.classList.add('active');
+
+      // update nav active states (desktop)
+      document.querySelectorAll('.nav-link').forEach(el => {
+        if (el.dataset?.nav === id) el.classList.add('text-primary-500','font-semibold');
+        else el.classList.remove('text-primary-500','font-semibold');
+      });
+
+      // mobile links
+      document.querySelectorAll('.mobile-link').forEach(el => {
+        if (el.dataset?.nav === id) el.classList.add('text-primary-500','font-semibold');
+        else el.classList.remove('text-primary-500','font-semibold');
+      });
+
+      // set document title (nice touch)
+      document.title = id.charAt(0).toUpperCase() + id.slice(1) + ' — Portfolio';
+    }
+
+    function navigateTo(id, push=true) {
+      if (push) {
+        location.hash = id; // will trigger hashchange event
+      } else {
+        showSection(id);
+      }
+    }
+
+    // on load, show correct section based on hash
+    function handleHashChange() {
+      const raw = location.hash.replace('#','');
+      const target = raw || 'home';
+      showSection(target);
+    }
+
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('DOMContentLoaded', () => {
+      // set year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // wire up desktop nav
+      brandLinks.forEach(a => {
+        a.addEventListener('click', (e) => {
+          const nav = a.dataset.nav || a.getAttribute('href').replace('#','');
+          if (nav) {
+            // let default anchor behavior update hash
+            // delay closing mobile menu if open
+            if (document.getElementById('mobile-menu').classList.contains('hidden') === false) toggleMobileMenu(false);
+          }
+        });
+      });
+
+      // mobile links click
+      mobileLinks.forEach(a => a.addEventListener('click', (e) => {
+        // allow hash to change by link href
+        toggleMobileMenu(false);
+      }));
+
+      // initial render
+      handleHashChange();
+
+      // mobile toggle
+      const mobileToggle = document.getElementById('mobile-toggle');
+      mobileToggle.addEventListener('click', () => toggleMobileMenu());
+
+      // make nav-link clicks update hash without full page reload (anchors already won't reload but we add safety)
+      document.querySelectorAll('a[data-nav]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.dataset.nav || a.getAttribute('href').replace('#','');
+          if (id) {
+            e.preventDefault();
+            // set hash (triggers hashchange & showSection)
+            if (location.hash.replace('#','') !== id) location.hash = id;
+            else showSection(id); // if same hash, manually show
+          }
+        });
+      });
+
+      // contact form demo submit
+      document.getElementById('submit-btn').addEventListener('click', () => {
+        // basic validation
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const msg = document.getElementById('message').value.trim();
+        const toast = document.getElementById('form-toast');
+        if (!name || !email || !msg) {
+          toast.classList.remove('text-green-600');
+          toast.classList.add('text-red-600');
+          toast.textContent = 'Please fill all fields.';
+          toast.classList.remove('hidden');
+          return;
+        }
+        toast.classList.remove('hidden');
+        toast.classList.remove('text-red-600');
+        toast.classList.add('text-green-600');
+        toast.textContent = 'Message ready to send (demo).';
+      });
+    });
+
+    function toggleMobileMenu(force) {
+      const menu = document.getElementById('mobile-menu');
+      const expanded = document.getElementById('mobile-toggle').getAttribute('aria-expanded') === 'true';
+      const isOpen = !menu.classList.contains('hidden');
+      const open = typeof force === 'boolean' ? force : !isOpen;
+      if (open) {
+        menu.classList.remove('hidden');
+        document.getElementById('mobile-toggle').setAttribute('aria-expanded','true');
+        document.getElementById('hamburger').classList.add('hidden');
+        document.getElementById('closeicon').classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+        document.getElementById('mobile-toggle').setAttribute('aria-expanded','false');
+        document.getElementById('hamburger').classList.remove('hidden');
+        document.getElementById('closeicon').classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
